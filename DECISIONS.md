@@ -164,3 +164,12 @@ Architecture, stack, and design decisions logged as they were made.
 **Options considered:** Keep the prior instruction-only contract · Ask the user every time even when brand is inferable · Enforce explicit brand at script boundaries and fail fast when missing
 **Decision:** Enforce explicit brand selection. Stdin-driven project/asset/todo/log/analytics/visual scripts now require a `brand` field. Brand-scoped CLI tools now require `--brand`; using the default brand remains possible only by passing `--brand default` intentionally.
 **Tradeoffs:** Slightly more ceremony in commands and tests, but Brand OS can no longer silently route cross-brand work to `default`. The agent still identifies/infer-checks the brand in conversation before running scripts; the scripts are the final guardrail.
+
+---
+
+## Brand-default assets and relation-scoped idempotency
+**Date:** 2026-06-11
+**Context:** The multi-brand architecture evolved past the original LinkedIn-centric default set. Youmi and KitchenOS use Instagram/XHS-led defaults, while shared Notion databases still require strict dedupe boundaries.
+**Options considered:** Keep one global asset set · Move all channel defaults into brand DNA · Add a separate channel policy config file
+**Decision:** Brand DNA is the source of truth for default channels. Knowledge Brand keeps LinkedIn PM, LinkedIn DE, XHS, and Notion Website as its default set; other brands can override this in `DNA.md`. Marketing Project creation now requires `brand_project`, asset idempotency is scoped by `Project` when available, and todo idempotency is scoped by `Linked Asset` when available.
+**Tradeoffs:** The agent must read DNA before drafting, but the runtime now matches multi-brand reality and avoids cross-brand collisions in shared Notion databases.

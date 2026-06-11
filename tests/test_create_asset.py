@@ -38,6 +38,21 @@ class TestFindExistingAsset:
     def test_returns_none_when_not_found(self, mock_db):
         assert ca.find_existing_asset('Unknown Asset') is None
 
+    @patch('create_asset.query_database', return_value=[MOCK_EXISTING_PAGE])
+    @patch('create_asset.DB_IDS', {'marketing_assets': 'real-db-id'})
+    def test_scopes_lookup_by_project_when_provided(self, mock_db):
+        result = ca.find_existing_asset('MCP is the new API — LinkedIn (PM)', 'proj-123')
+        assert result['id'] == 'asset-id-existing'
+        mock_db.assert_called_once_with(
+            'real-db-id',
+            filter_obj={
+                'and': [
+                    {'property': 'Asset Name', 'title': {'equals': 'MCP is the new API — LinkedIn (PM)'}},
+                    {'property': 'Project', 'relation': {'contains': 'proj-123'}},
+                ],
+            },
+        )
+
 
 class TestCreateAsset:
     BASE_DATA = {
@@ -110,6 +125,7 @@ class TestCreateAsset:
         ca.create_asset(data)
         props = mock_create.call_args[0][1]
         assert props['Project'] == {'relation': [{'id': 'proj-123'}]}
+        mock_find.assert_called_once_with('MCP is the new API — LinkedIn (PM)', 'proj-123')
 
     @patch('create_asset.find_existing_asset', return_value=None)
     @patch('create_asset.create_page', return_value=MOCK_CREATED_PAGE)

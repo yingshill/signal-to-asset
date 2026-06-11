@@ -37,6 +37,21 @@ class TestFindExistingTodo:
     def test_returns_none_when_not_found(self, mock_db):
         assert ct.find_existing_todo('Unknown Task') is None
 
+    @patch('create_todo.query_database', return_value=[MOCK_EXISTING_PAGE])
+    @patch('create_todo.DB_IDS', {'marketing_todos': 'real-db-id'})
+    def test_scopes_lookup_by_asset_when_provided(self, mock_db):
+        result = ct.find_existing_todo('Review — MCP is the new API — LinkedIn (PM)', 'asset-123')
+        assert result['id'] == 'todo-id-existing'
+        mock_db.assert_called_once_with(
+            'real-db-id',
+            filter_obj={
+                'and': [
+                    {'property': 'Task', 'title': {'equals': 'Review — MCP is the new API — LinkedIn (PM)'}},
+                    {'property': 'Linked Asset', 'relation': {'contains': 'asset-123'}},
+                ],
+            },
+        )
+
 
 class TestCreateTodo:
     @patch('create_todo.find_existing_todo', return_value=MOCK_EXISTING_PAGE)
@@ -94,6 +109,7 @@ class TestCreateTodo:
         ct.create_todo({'task': 'Review', 'asset_id': 'asset-123', 'brand': 'youmi'})
         props = mock_create.call_args[0][1]
         assert props['Linked Asset'] == {'relation': [{'id': 'asset-123'}]}
+        mock_find.assert_called_once_with('Review', 'asset-123')
 
     @patch('create_todo.find_existing_todo', return_value=None)
     @patch('create_todo.create_page', return_value=MOCK_PAGE)

@@ -35,9 +35,9 @@ When a post includes a carousel (LinkedIn post + carousel, XHS post + carousel, 
   - `Carousel` for a standalone carousel (e.g., XHS carousel-only posts)
 - Do **not** create a separate "Carousel" asset when the carousel is attached to a text post on the same channel. **One asset = one publishable deliverable.**
 
-## LinkedIn dual-audience rule (always applies)
+## LinkedIn dual-audience rule
 
-Whenever creating LinkedIn assets, **always create 2 separate LinkedIn assets** — one for **PM audience** and one for **DE (Data Engineering) audience**. This applies to every project, every brainstorm, every LinkedIn deliverable — **no exceptions**.
+Whenever creating LinkedIn assets for a brand that uses the LinkedIn dual-audience rule, create 2 separate LinkedIn assets — one for **PM audience** and one for **DE (Data Engineering) audience**. Brand DNA can override the global LinkedIn-centric default set.
 
 | Variant | Audience | Emphasis |
 |---|---|---|

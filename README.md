@@ -4,13 +4,13 @@
 [![Python](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-agent-blueviolet?logo=anthropic)](https://claude.ai/code)
 [![Notion API](https://img.shields.io/badge/Notion-API%20v1-black?logo=notion)](https://developers.notion.com/)
-[![Tests](https://img.shields.io/badge/tests-62%20passing-brightgreen)]()
+[![Tests](https://img.shields.io/badge/tests-118%20passing-brightgreen)]()
 
 Good ideas don't become content by themselves. There's a gap between capturing an insight and publishing it — and that gap is filled with repetitive work: drafting angles, reformatting per platform, creating tasks, linking everything in your workspace.
 
-**Brand OS** closes that gap with an agentic workflow. It reads a source entry from your Notion knowledge base — an article, a course note, a GitHub repo, a podcast insight — extracts the core signal, and runs an end-to-end content pipeline: marketing plan → 5 platform-ready drafts → linked publish tasks, all written and saved automatically.
+**Brand OS** closes that gap with an agentic workflow. It reads a source entry from your Notion knowledge base — an article, a course note, a GitHub repo, a podcast insight — extracts the core signal, and runs an end-to-end content pipeline: marketing plan → brand-specific draft assets → linked publish tasks, all written and saved automatically.
 
-The result lands directly in your Notion workspace: a Marketing Project tied to the source, five draft assets across LinkedIn, RedNote, X, and Notion Publish, and a ready-to-action to-do checklist. You review, refine, and publish. The pipeline handles everything else.
+The result lands directly in your Notion workspace: a Marketing Project tied to the source, draft assets for the brand's default channels, and a ready-to-action to-do checklist. You review, refine, and publish. The pipeline handles everything else.
 
 > **Owner:** Yingshi Liu · **Runtime:** Claude Code · **Multi-Brand OS**
 
@@ -36,7 +36,7 @@ graph TD
 ## 🏗️ Multi-Brand Infrastructure
 
 The system now supports managing multiple businesses:
-- **`brands/`**: Independent DNA, configurations, and visual styles per business.
+- **`brands/`**: Independent DNA and Notion routing per business. Visual identity is owned by DesignLore.
 - **Auto-Detection**: Automatic brand identification based on Notion source URL.
 - **Analytics Sync**: Push real engagement data back into Notion.
 
@@ -48,21 +48,22 @@ See the [**Operations Guide**](OPERATIONS_GUIDE.md) for how to run the growth en
 
 | Mode | Trigger | What it does |
 |---|---|---|
-| **Project Mode** | Paste a Notion page URL | Fetches entry, creates Marketing Project, approval gate, drafts 5 assets + to-dos |
+| **Project Mode** | Paste a Notion page URL | Fetches entry, creates Marketing Project, approval gate, drafts brand-default assets + to-dos |
 | **Asset Creation** | "draft assets for [topic]" | Drafts posts/carousels for specified channels |
 | **To-Do Generation** | "generate to-dos for [asset]" | Creates Review → Design → Publish checklist |
 
-### Default assets per project — always 5, no approval needed
+### Knowledge Brand default assets — 4, no approval needed
+
+Brand-specific `DNA.md` files can override this default set. For example, Youmi and KitchenOS use Instagram/XHS-led defaults instead of the LinkedIn-centric set below.
 
 | # | Asset | Channel | Notes |
 |---|---|---|---|
 | 1 | LinkedIn (PM) | LinkedIn | Hook for product managers / operators / AI builders · under 1,300 chars |
 | 2 | LinkedIn (DE) | LinkedIn | Hook for data / ML engineers · same insight, different angle |
-| 3 | RedNote Carousel | RedNote | Caption + design brief + slide deck |
-| 4 | X / Twitter | X | Punchy thread or single post |
-| 5 | Notion Publish Page | Notion | Cleaned republish of source entry |
+| 3 | Xiaohongshu (XHS) | XHS | Caption + design brief + slide deck |
+| 4 | Notion Publishing Website | General | Cleaned republish of source entry |
 
-Extra channels (Substack, YouTube, etc.) require explicit user approval per run.
+Extra channels (X, Substack, YouTube, etc.) require explicit user approval per run.
 
 ---
 
@@ -217,7 +218,7 @@ See [`DECISIONS.md`](DECISIONS.md) for the full log. Notable choices:
 - **Trigger = URL paste**, not auto-trigger on Notion tag — keeps the agent human-initiated
 - **Human approval gate** before any assets are saved — agent drafts, you decide
 - **File-based cache** (not in-memory) — survives across separate Python processes
-- **LinkedIn always = 2 assets** (PM + DE) — no exceptions
+- **LinkedIn dual-audience rule** — when LinkedIn is in the brand default set, create PM + DE variants
 - **Agent never publishes** — it creates Draft rows and Review tasks only
 
 ---

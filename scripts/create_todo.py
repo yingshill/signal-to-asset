@@ -44,14 +44,26 @@ from notion_client import (
 )
 
 
-def find_existing_todo(task: str) -> dict | None:
+def find_existing_todo(task: str, asset_id: str = '') -> dict | None:
     db_id = DB_IDS['marketing_todos']
     if not db_id:
         return None
-    pages = query_database(db_id, filter_obj={
+
+    task_filter = {
         'property': 'Task',
         'title': {'equals': task},
-    })
+    }
+    if asset_id:
+        filter_obj = {
+            'and': [
+                task_filter,
+                {'property': 'Linked Asset', 'relation': {'contains': asset_id}},
+            ],
+        }
+    else:
+        filter_obj = task_filter
+
+    pages = query_database(db_id, filter_obj=filter_obj)
     return pages[0] if pages else None
 
 
@@ -66,7 +78,7 @@ def create_todo(data: dict) -> dict:
 
     task = data['task']
 
-    existing = find_existing_todo(task)
+    existing = find_existing_todo(task, data.get('asset_id', ''))
     if existing:
         return {
             'action': 'existing',

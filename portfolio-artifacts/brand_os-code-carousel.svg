@@ -19,8 +19,8 @@
 
   <text x="147" y="148" font-size="30" font-weight="800" fill="#1A2030" text-anchor="middle">1 URL</text>
   <text x="147" y="168" font-size="18" fill="#c9c8c7" text-anchor="middle">↓</text>
-  <text x="147" y="194" font-size="15" font-weight="700" fill="#C8A870" text-anchor="middle">5 Posts. Done.</text>
-  <text x="147" y="214" font-size="9" fill="#787774" text-anchor="middle">LinkedIn · RedNote · X · Notion Publish</text>
+  <text x="147" y="194" font-size="15" font-weight="700" fill="#C8A870" text-anchor="middle">Brand Assets. Done.</text>
+  <text x="147" y="214" font-size="9" fill="#787774" text-anchor="middle">LinkedIn · XHS · Notion Website</text>
 
   <line x1="66" y1="228" x2="228" y2="228" stroke="#e9e9e7" stroke-width="1"/>
   <text x="147" y="248" font-size="8.5" fill="#787774" text-anchor="middle" font-weight="600">Brand OS</text>
@@ -73,7 +73,7 @@
 
   <rect x="506" y="164" width="168" height="30" rx="5" fill="#ffffff" stroke="#e9e9e7" stroke-width="1"/>
   <rect x="506" y="164" width="3" height="30" rx="2" fill="#7B9EA6"/>
-  <text x="524" y="176" font-size="8" fill="#1A2030" font-weight="700">5 Assets + To-Dos</text>
+  <text x="524" y="176" font-size="8" fill="#1A2030" font-weight="700">Assets + To-Dos</text>
   <text x="524" y="188" font-size="8" fill="#787774">saved to Notion</text>
 
   <line x1="506" y1="210" x2="674" y2="210" stroke="#e9e9e7" stroke-width="1"/>
@@ -114,7 +114,7 @@
   <text x="240" y="386" font-size="9" fill="#c9c8c7" text-anchor="end" font-weight="600">05</text>
   <text x="56" y="394" font-size="7.5" fill="#787774" letter-spacing="1.2" font-weight="600">STEP 2 · DRAFT</text>
 
-  <text x="56" y="414" font-size="9.5" fill="#1A2030" font-weight="600">Claude writes 5 assets:</text>
+  <text x="56" y="414" font-size="9.5" fill="#1A2030" font-weight="600">Claude drafts defaults:</text>
 
   <rect x="56" y="422" width="182" height="24" rx="4" fill="#ffffff" stroke="#e9e9e7" stroke-width="1"/>
   <rect x="56" y="422" width="3" height="24" rx="2" fill="#C8A870"/>
@@ -128,18 +128,18 @@
 
   <rect x="56" y="478" width="182" height="24" rx="4" fill="#ffffff" stroke="#e9e9e7" stroke-width="1"/>
   <rect x="56" y="478" width="3" height="24" rx="2" fill="#C8A870"/>
-  <text x="66" y="490" font-size="8.5" fill="#1A2030" font-weight="700">RedNote Carousel</text>
+  <text x="66" y="490" font-size="8.5" fill="#1A2030" font-weight="700">XHS Carousel</text>
   <text x="66" y="500" font-size="8" fill="#787774">Caption + design brief + slides</text>
 
   <rect x="56" y="506" width="182" height="24" rx="4" fill="#ffffff" stroke="#e9e9e7" stroke-width="1"/>
   <rect x="56" y="506" width="3" height="24" rx="2" fill="#C8A870"/>
-  <text x="66" y="518" font-size="8.5" fill="#1A2030" font-weight="700">X / Twitter</text>
-  <text x="66" y="528" font-size="8" fill="#787774">Punchy thread or single post</text>
+  <text x="66" y="518" font-size="8.5" fill="#1A2030" font-weight="700">Notion Website</text>
+  <text x="66" y="528" font-size="8" fill="#787774">Cleaned republish of source</text>
 
   <rect x="56" y="534" width="182" height="24" rx="4" fill="#ffffff" stroke="#e9e9e7" stroke-width="1"/>
   <rect x="56" y="534" width="3" height="24" rx="2" fill="#C8A870"/>
-  <text x="66" y="546" font-size="8.5" fill="#1A2030" font-weight="700">Notion Publish Page</text>
-  <text x="66" y="556" font-size="8" fill="#787774">Cleaned republish of source entry</text>
+  <text x="66" y="546" font-size="8.5" fill="#1A2030" font-weight="700">Approval-gated extras</text>
+  <text x="66" y="556" font-size="8" fill="#787774">X, Substack, YouTube, etc.</text>
 
   <text x="56" y="576" font-size="8" fill="#787774">Human approval gate before saving.</text>
 
@@ -181,7 +181,7 @@
 
   <line x1="516" y1="478" x2="666" y2="478" stroke="#e9e9e7" stroke-width="1"/>
 
-  <text x="500" y="497" font-size="9" fill="#7B9EA6">✓  5 assets drafted</text>
+  <text x="500" y="497" font-size="9" fill="#7B9EA6">✓  Defaults drafted</text>
   <text x="500" y="513" font-size="9" fill="#7B9EA6">✓  8+ to-dos created</text>
   <text x="500" y="529" font-size="9" fill="#7B9EA6">✓  All linked in Notion</text>
   <text x="500" y="545" font-size="9" fill="#7B9EA6">✓  Zero manual formatting</text>

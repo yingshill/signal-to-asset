@@ -1,5 +1,5 @@
 """
-Generate an AI visual using DALL-E 3 based on brand DNA and style.
+Generate an AI visual using DALL-E 3 based on brand DNA.
 
 Usage:
     python scripts/generate_visuals.py <<'JSON'
@@ -20,10 +20,33 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 sys.path.insert(0, os.path.dirname(__file__))
-from notion_client import load_brand_style, classify_error
+from notion_client import classify_error
 
 load_dotenv(Path(__file__).parent.parent / '.env')
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
+
+
+def _load_visual_identity_from_dna(brand: str) -> str:
+    """Return the Visual Identity section from brands/<brand>/DNA.md, if present."""
+    dna_path = Path(__file__).parent.parent / 'brands' / brand / 'DNA.md'
+    if not dna_path.exists():
+        return ''
+
+    lines = dna_path.read_text(encoding='utf-8').splitlines()
+    section = []
+    in_section = False
+    for line in lines:
+        if line.startswith('## '):
+            if in_section:
+                break
+            in_section = line.strip().lower() == '## visual identity'
+            continue
+        if in_section and line.strip():
+            cleaned = line.strip().lstrip('- ').strip()
+            if 'DesignLore/' in cleaned or cleaned.startswith('Do not hand-edit'):
+                continue
+            section.append(cleaned)
+    return ' '.join(section)
 
 
 def generate_visual(data: dict) -> dict:
@@ -33,19 +56,14 @@ def generate_visual(data: dict) -> dict:
     brand = data.get('brand')
     if not brand:
         raise ValueError('brand is required; pass the target brand explicitly')
-    style = load_brand_style(brand)
-    
-    # Construct a high-signal prompt using Brand Style
+
+    # Construct a high-signal prompt using brand DNA; visual tokens live in DesignLore.
     base_prompt = data.get('prompt', '')
-    identity = style.get('visual_identity', {})
-    keywords = identity.get('style_keywords', [])
-    image_style = identity.get('image_style', '')
-    
-    style_suffix = f" Style keywords: {', '.join(keywords)}." if keywords else ""
-    if image_style:
-        style_suffix += f" Overall style: {image_style}"
-        
-    full_prompt = f"{base_prompt}. {style_suffix}"
+    visual_identity = _load_visual_identity_from_dna(brand)
+    full_prompt = base_prompt.strip()
+    if visual_identity:
+        suffix = f"Brand visual direction: {visual_identity}"
+        full_prompt = f"{full_prompt}. {suffix}" if full_prompt else suffix
     
     size = "1024x1024"
     if data.get('aspect_ratio') == '16:9':

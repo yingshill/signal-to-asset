@@ -39,14 +39,26 @@ from notion_client import (
 CARD_CANVAS_URL = 'https://www.cardcanvas.app/'
 
 
-def find_existing_asset(asset_name: str) -> dict | None:
+def find_existing_asset(asset_name: str, project_id: str = '') -> dict | None:
     db_id = DB_IDS['marketing_assets']
     if not db_id:
         return None
-    pages = query_database(db_id, filter_obj={
+
+    title_filter = {
         'property': 'Asset Name',
         'title': {'equals': asset_name},
-    })
+    }
+    if project_id:
+        filter_obj = {
+            'and': [
+                title_filter,
+                {'property': 'Project', 'relation': {'contains': project_id}},
+            ],
+        }
+    else:
+        filter_obj = title_filter
+
+    pages = query_database(db_id, filter_obj=filter_obj)
     return pages[0] if pages else None
 
 
@@ -57,7 +69,7 @@ def create_asset(data: dict) -> dict:
 
     asset_name = data['asset_name']
 
-    existing = find_existing_asset(asset_name)
+    existing = find_existing_asset(asset_name, data.get('project_id', ''))
     if existing:
         return {
             'action': 'existing',

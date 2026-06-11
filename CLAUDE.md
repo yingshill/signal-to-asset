@@ -96,7 +96,7 @@ Positioning: [one-liner]
 Before I create assets, I need your input:
 
 1️⃣ Asset Scope
-   Which channels? (defaults: LinkedIn PM + DE, XHS, Notion Website)
+   Which channels? (use the brand DNA defaults; Knowledge Brand defaults: LinkedIn PM + DE, XHS, Notion Website)
    Any extras? (X, Substack, YouTube)
 
 2️⃣ Hook / Angle
@@ -118,7 +118,7 @@ Wait for the user's reply.
 
 ### Step 5 — Generate Visuals (Optional/Automated)
 
-For assets that require visuals (LinkedIn, XHS), generate an AI image:
+For assets that require visuals in the brand's channel mix, generate an AI image:
 
 ```bash
 python scripts/generate_visuals.py <<'JSON'
@@ -253,6 +253,6 @@ python scripts/generate_post_mortem.py --brand <brand> --top 5
 - **Multi-Brand Integrity:** Never save assets for Brand A into Brand B's databases.
 - **DNA First:** Always reference the brand's `DNA.md` before writing content.
 - **Manual Brand Override:** If a user says "use brand X", respect it regardless of auto-detection.
-- LinkedIn always means 2 assets (PM + DE) — no exceptions.
-- 4 default assets are mandatory on every project.
+- When LinkedIn is selected for a brand that uses the LinkedIn dual-audience rule, create 2 assets (PM + DE).
+- Follow the brand's `DNA.md` default channel set. Knowledge Brand defaults to 4 assets: LinkedIn PM, LinkedIn DE, XHS, Notion Website.
 - Additional channels require user approval.

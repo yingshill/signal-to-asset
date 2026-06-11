@@ -135,15 +135,6 @@ def load_brand_config(brand_name: str = 'default') -> dict:
     return {'db_ids': db_ids, 'page_ids': page_ids}
 
 
-def load_brand_style(brand_name: str = 'default') -> dict:
-    """Load brand-specific visual identity settings."""
-    style_path = Path(__file__).parent.parent / 'brands' / brand_name / 'STYLE.json'
-    if style_path.exists():
-        with open(style_path) as f:
-            return json.load(f)
-    return {}
-
-
 def find_brand_by_db(db_id: str) -> Optional[str]:
     """Search all brands for one that contains this database ID."""
     db_id_clean = db_id.replace('-', '')

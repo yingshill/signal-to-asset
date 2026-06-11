@@ -53,6 +53,8 @@ def create_project(data: dict) -> dict:
     title = data.get('title', '').strip()
     positioning = data.get('positioning', '').strip()
     brand_project_id = data.get('brand_project_id') or PAGE_IDS.get('brand_project', '')
+    if not brand_project_id:
+        raise ValueError("brand_project is required for this brand; set notion.page_ids.brand_project in brands/<brand>/config.json")
 
     existing = find_existing_project(title, brand_project_id)
     if existing:
@@ -70,8 +72,7 @@ def create_project(data: dict) -> dict:
         'Priority': select_prop('🟡 Medium'),
         'Tier': select_prop('🔵 Tier 3'),
     }
-    if brand_project_id:
-        props['Project'] = relation_prop([brand_project_id])
+    props['Project'] = relation_prop([brand_project_id])
 
     page = create_page(db_id, props)
 
