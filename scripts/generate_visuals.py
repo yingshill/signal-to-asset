@@ -4,7 +4,7 @@ Generate an AI visual using DALL-E 3 based on brand DNA and style.
 Usage:
     python scripts/generate_visuals.py <<'JSON'
     {
-      "brand": "default",
+      "brand": "youmi",
       "prompt": "Minimalist representation of an agentic workflow",
       "aspect_ratio": "1:1"
     }
@@ -30,7 +30,9 @@ def generate_visual(data: dict) -> dict:
     if not OPENAI_API_KEY:
         raise ValueError("OPENAI_API_KEY is not set in .env")
 
-    brand = data.get('brand', 'default')
+    brand = data.get('brand')
+    if not brand:
+        raise ValueError('brand is required; pass the target brand explicitly')
     style = load_brand_style(brand)
     
     # Construct a high-signal prompt using Brand Style

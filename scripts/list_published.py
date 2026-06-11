@@ -2,7 +2,7 @@
 List recent published or ready assets that need analytics syncing.
 
 Usage:
-    python scripts/list_published.py [--brand brand_name] [--limit 10]
+    python scripts/list_published.py --brand brand_name [--limit 10]
 """
 import sys
 import json
@@ -16,7 +16,7 @@ from notion_client import (
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--brand', default='default')
+    parser.add_argument('--brand', required=True)
     parser.add_argument('--limit', type=int, default=10)
     args = parser.parse_args()
     

@@ -11,6 +11,7 @@ import log_run as lr
 
 
 SAMPLE_RUN = {
+    'brand': 'youmi',
     'project_id': 'proj-abc',
     'project_title': 'MCP is the new API',
     'assets': [
@@ -67,7 +68,7 @@ class TestLogRun:
         assert result['todos_existing'] == 0
 
     def test_handles_empty_assets_and_todos(self):
-        result = lr.log_run({'project_id': 'x', 'project_title': 'Empty', 'assets': [], 'todos': []})
+        result = lr.log_run({'brand': 'youmi', 'project_id': 'x', 'project_title': 'Empty', 'assets': [], 'todos': []})
         assert result['assets_created'] == 0
         assert result['todos_created'] == 0
 
@@ -81,10 +82,10 @@ class TestLogRun:
         entry = json.loads((self.tmp / 'runs.jsonl').read_text().strip())
         assert entry['brand'] == 'other'
 
-    def test_brand_defaults_to_default(self):
-        lr.log_run(SAMPLE_RUN)
-        entry = json.loads((self.tmp / 'runs.jsonl').read_text().strip())
-        assert entry['brand'] == 'default'
+    def test_missing_brand_raises(self):
+        data = {k: v for k, v in SAMPLE_RUN.items() if k != 'brand'}
+        with pytest.raises(ValueError, match='brand is required'):
+            lr.log_run(data)
 
     def test_brand_returned_in_summary(self):
         result = lr.log_run({**SAMPLE_RUN, 'brand': 'other'})

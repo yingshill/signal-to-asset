@@ -22,7 +22,7 @@ The system is multi-tenant.
 - When a URL is pasted, `fetch_entry.py` will attempt to auto-detect the brand from its source DB.
 - If detection fails, ask the user: "Which brand should I use for this?"
 - Once identified, **load `brands/{brand}/DNA.md`** and use it as your primary instruction for all content generation.
-- **Always pass `"brand": "<brand>"` in the stdin JSON for every script** (`create_project`, `create_asset`, `create_todo`, `log_run`, `sync_analytics`). `set_brand()` resolves the brand's `brand_project` page ID so `create_project` can stamp the `Project` relation correctly.
+- **Always pass `"brand": "<brand>"` in the stdin JSON for every script** (`create_project`, `create_asset`, `create_todo`, `log_run`, `sync_analytics`, `generate_visuals`). These scripts fail fast when `brand` is missing; do not rely on `default`. `set_brand()` resolves the brand's `brand_project` page ID so `create_project` can stamp the `Project` relation correctly.
 
 ### Adding a new brand
 ```bash

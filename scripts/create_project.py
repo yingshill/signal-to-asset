@@ -4,6 +4,7 @@ Create or find a Marketing Project in Notion.
 Usage:
     python scripts/create_project.py <<'JSON'
     {
+      "brand": "youmi",
       "title": "Project Title",
       "positioning": "One-sentence positioning statement"
     }
@@ -85,7 +86,9 @@ def create_project(data: dict) -> dict:
 if __name__ == '__main__':
     try:
         data = json.loads(sys.stdin.read())
-        brand = data.get('brand', 'default')
+        brand = data.get('brand')
+        if not brand:
+            raise ValueError('brand is required; pass the target brand explicitly')
         from notion_client import set_brand
         set_brand(brand)
         

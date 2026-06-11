@@ -139,9 +139,28 @@ Architecture, stack, and design decisions logged as they were made.
 
 ---
 
+## New brand — KitchenOS positioning & channel defaults
+**Date:** 2026-05-19
+**Context:** Stood up a third brand, `kitchenos`. Initial inputs were mixed — described as a "smart-home cooking app" but with an audience of "restaurant operators/chefs." Needed to reconcile the two before writing DNA.
+**Options considered:** Prosumer / pro-grade-at-home · Crossover pros+home · Chef-led marketed to home · Truly chef/operator B2B. Voice: confident/technique-driven · warm/approachable · sleek product-forward · editorial/curator.
+**Decision:** Positioning = **prosumer "pro-grade-at-home"** — a home cooking app that brings restaurant-level technique and systems to ambitious home cooks (the buyer); chefs are the aspiration/credibility anchor, not the core market. Voice = **warm + approachable** with quiet credibility. Default channels override the global LinkedIn-centric defaults: **Instagram (carousel + reel), Xiaohongshu, Notion Website**; LinkedIn is approval-gated (founder/B2B narrative only).
+**Tradeoffs:** A focused buyer (ambitious home cook) keeps content sharp and avoids the trap of B2B restaurant-ops messaging the product isn't built for. Departing from the LinkedIn default means the "LinkedIn = 2 assets" hard rule does not apply to this brand's default set; this is a deliberate per-brand override recorded in `brands/kitchenos/DNA.md`. Brand is not yet "healthy" — awaiting the Notion Projects-DB row + page ID.
+
+---
+
 ## Project tracking — ROADMAP.md + DECISIONS.md (not a single file)
 **Date:** 2026-05
 **Context:** Needed a way to track progress, backlog, artifacts, and design decisions. A single file mixes concerns.
 **Options considered:** Single `ROADMAP.md` · `ROADMAP.md` + `DECISIONS.md` · Full ADR folder structure
 **Decision:** Two files. `ROADMAP.md` for what/when (progress, backlog, artifacts). `DECISIONS.md` for why (architecture, stack, design choices). Full ADR folder structure was overkill for a solo project.
 **Tradeoffs:** Clean separation of concerns, different read frequency. ROADMAP changes constantly; DECISIONS is append-only.
+
+
+---
+
+## Explicit brand selection is enforced at script boundaries
+**Date:** 2026-06-11
+**Context:** A Youmi insurance content idea exposed an operational risk: campaign ideas can originate inside any project repo, but Brand OS owns marketing plans/assets across multiple brands. If Brand OS accepts omitted-brand payloads or defaults CLI tools to `default`, a project can be created, logged, or routed under the wrong brand.
+**Options considered:** Keep the prior instruction-only contract · Ask the user every time even when brand is inferable · Enforce explicit brand at script boundaries and fail fast when missing
+**Decision:** Enforce explicit brand selection. Stdin-driven project/asset/todo/log/analytics/visual scripts now require a `brand` field. Brand-scoped CLI tools now require `--brand`; using the default brand remains possible only by passing `--brand default` intentionally.
+**Tradeoffs:** Slightly more ceremony in commands and tests, but Brand OS can no longer silently route cross-brand work to `default`. The agent still identifies/infer-checks the brand in conversation before running scripts; the scripts are the final guardrail.

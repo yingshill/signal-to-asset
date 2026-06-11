@@ -3,10 +3,10 @@ Automated test suite — runs against live Notion APIs.
 Cleans up all test rows it creates (archives them).
 
 Usage:
-    python scripts/test_run.py [--brand brand_name]
+    python scripts/test_run.py --brand brand_name
 
 Optional — test fetch_entry against a real source page:
-    python scripts/test_run.py --url "https://www.notion.so/..." [--brand brand_name]
+    python scripts/test_run.py --url "https://www.notion.so/..." --brand brand_name
 """
 import sys
 import json
@@ -22,7 +22,7 @@ from notion_client import (
 )
 
 parser = argparse.ArgumentParser(add_help=False)
-parser.add_argument('--brand', default='default')
+parser.add_argument('--brand', required=True)
 parser.add_argument('--url', default='')
 args, _ = parser.parse_known_args()
 

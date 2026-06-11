@@ -2,7 +2,7 @@
 Weekly Planning Mode — surface top 3 ready assets and create publish tasks.
 
 Usage:
-    python scripts/weekly_planning.py [--brand brand_name]
+    python scripts/weekly_planning.py --brand brand_name
 
 Output: JSON summary of assets surfaced and tasks created.
 """
@@ -62,7 +62,9 @@ def publish_task_exists(asset_id: str) -> bool:
     return False
 
 
-def run(brand: str = 'default') -> dict:
+def run(brand: str) -> dict:
+    if not brand:
+        raise ValueError('brand is required; pass --brand explicitly')
     set_brand(brand)
     
     assets = get_ready_assets()
@@ -117,7 +119,7 @@ def run(brand: str = 'default') -> dict:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--brand', default='default')
+    parser.add_argument('--brand', required=True)
     args = parser.parse_args()
     
     try:

@@ -11,6 +11,7 @@ Asset names follow the deterministic convention:
 Usage:
     python scripts/create_asset.py <<'JSON'
     {
+      "brand": "youmi",
       "asset_name": "MCP is the new API — LinkedIn (PM)",
       "type": "Post | Carousel | Thread | Article | Case Study | Video",
       "channel": "LinkedIn | XHS | X | General | Substack | YouTube",
@@ -137,7 +138,9 @@ def create_asset(data: dict) -> dict:
 if __name__ == '__main__':
     try:
         data = json.loads(sys.stdin.read())
-        brand = data.get('brand', 'default')
+        brand = data.get('brand')
+        if not brand:
+            raise ValueError('brand is required; pass the target brand explicitly')
         from notion_client import set_brand
         set_brand(brand)
         

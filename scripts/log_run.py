@@ -7,6 +7,7 @@ JSON record — use `jq` or any JSON-lines reader to query history.
 Usage:
     python scripts/log_run.py <<'JSON'
     {
+      "brand": "youmi",
       "project_id": "...",
       "project_title": "...",
       "assets": [
@@ -34,9 +35,13 @@ LOG_FILE = Path(__file__).parent.parent / 'logs' / 'runs.jsonl'
 def log_run(data: dict) -> dict:
     LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
 
+    brand = data.get('brand')
+    if not brand:
+        raise ValueError('brand is required; pass the target brand explicitly')
+
     entry = {
         'ts': datetime.now(timezone.utc).isoformat(),
-        'brand': data.get('brand', 'default'),
+        'brand': brand,
         'project_id': data.get('project_id', ''),
         'project_title': data.get('project_title', ''),
         'assets': data.get('assets', []),

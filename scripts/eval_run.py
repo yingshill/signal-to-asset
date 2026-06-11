@@ -3,8 +3,8 @@ Human eval script — score agent output after a Project Mode run.
 Run after each session until the agent is production-ready.
 
 Usage:
-    python scripts/eval_run.py [--brand brand_name]Pick most recent project for brand.
-    python scripts/eval_run.py "https://notion.so/..." [--brand brand_name]
+    python scripts/eval_run.py --brand brand_name
+    python scripts/eval_run.py "https://notion.so/..." --brand brand_name
 
 Scores saved to: .eval/<date>-<project-slug>.json
 """
@@ -22,7 +22,7 @@ from notion_client import (
 )
 
 parser = argparse.ArgumentParser(add_help=False)
-parser.add_argument('--brand', default='default')
+parser.add_argument('--brand', required=True)
 parser.add_argument('url', nargs='?', default='')
 args, _ = parser.parse_known_args()
 

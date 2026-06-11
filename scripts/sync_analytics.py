@@ -4,7 +4,7 @@ Sync performance analytics for a published asset in Notion.
 Usage:
     python scripts/sync_analytics.py <<'JSON'
     {
-      "brand": "default",
+      "brand": "youmi",
       "asset_id": "...",
       "metrics": {
         "Views": 1500,
@@ -27,7 +27,9 @@ from notion_client import (
 
 
 def sync_analytics(data: dict) -> dict:
-    brand = data.get('brand', 'default')
+    brand = data.get('brand')
+    if not brand:
+        raise ValueError('brand is required; pass the target brand explicitly')
     set_brand(brand)
     
     asset_id = data.get('asset_id')

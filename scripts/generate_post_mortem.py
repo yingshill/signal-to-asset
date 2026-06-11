@@ -2,7 +2,7 @@
 Analyze top-performing assets for a brand and generate a 'Post-Mortem' report.
 
 Usage:
-    python scripts/generate_post_mortem.py [--brand brand_name] [--top 5]
+    python scripts/generate_post_mortem.py --brand brand_name [--top 5]
 """
 import sys
 import json
@@ -45,7 +45,7 @@ def get_top_assets(brand: str, limit: int = 5) -> list:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--brand', default='default')
+    parser.add_argument('--brand', required=True)
     parser.add_argument('--top', type=int, default=5)
     args = parser.parse_args()
     

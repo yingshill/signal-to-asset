@@ -9,22 +9,22 @@ Todo names follow the deterministic convention:
 
 Usage — single task:
     python scripts/create_todo.py <<'JSON'
-    {"brand": "default", "task": "Review — MCP is the new API — LinkedIn (PM)", "priority": "🔥 High", "channel": "LinkedIn", "asset_id": "..."}
+    {"brand": "youmi", "task": "Review — Cat Insurance Receipt Test — XHS", "priority": "🔥 High", "channel": "XHS", "asset_id": "..."}
     JSON
 
 Usage — batch (per-item brand):
     python scripts/create_todo.py <<'JSON'
-    [{"brand": "default", "task": "Review — ...", ...}, {"brand": "default", "task": "Publish — ...", ...}]
+    [{"brand": "youmi", "task": "Review — ...", ...}, {"brand": "youmi", "task": "Publish — ...", ...}]
     JSON
 
 Usage — batch (shared brand wrapper):
     python scripts/create_todo.py <<'JSON'
-    {"brand": "default", "items": [{"task": "Review — ..."}, {"task": "Publish — ..."}]}
+    {"brand": "youmi", "items": [{"task": "Review — ..."}, {"task": "Publish — ..."}]}
     JSON
 
 JSON shape (single):
     {
-      "brand": "default",
+      "brand": "youmi",
       "task": "Review — {asset_name}",
       "priority": "🔥 High | 🟡 Medium",
       "channel": "LinkedIn",
@@ -56,8 +56,10 @@ def find_existing_todo(task: str) -> dict | None:
 
 
 def create_todo(data: dict) -> dict:
-    if 'brand' in data:
-        set_brand(data['brand'])
+    brand = data.get('brand')
+    if not brand:
+        raise ValueError('brand is required; pass the target brand explicitly')
+    set_brand(brand)
     db_id = DB_IDS['marketing_todos']
     if not db_id:
         raise ValueError("NOTION_DB_MARKETING_TODOS is not set in .env")
